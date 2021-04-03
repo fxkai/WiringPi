@@ -24,6 +24,9 @@
 VERSION=$(shell cat ../VERSION)
 DESTDIR?=/usr
 PREFIX?=/local
+BASE_NAME=libwiringPi
+STATIC=$(BASE_NAME).a
+DYNAMIC=$(BASE_NAME).so.$(VERSION)
 
 INCLUDE_DIR?=$(DESTDIR)$(PREFIX)/include
 LIB_DIR?=$(DESTDIR)$(PREFIX)/lib
@@ -79,6 +82,7 @@ static:
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
 	$Q $(CC) -shared -Wl,-soname,libwiringPi.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ)
+	$Q ln -sf libwiringPi.so.$(VERSION) libwiringPi.so
 
 .c.o:
 	$Q echo [Compile] $<
