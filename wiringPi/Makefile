@@ -25,6 +25,9 @@ VERSION=$(shell cat ../VERSION)
 DESTDIR?=/usr
 PREFIX?=/local
 
+INCLUDE_DIR?=$(DESTDIR)$(PREFIX)/include
+LIB_DIR?=$(DESTDIR)$(PREFIX)/lib
+
 LDCONFIG?=ldconfig
 
 ifneq ($V,1)
@@ -37,7 +40,7 @@ DYNAMIC=libwiringPi.so.$(VERSION)
 #DEBUG	= -g -O0
 DEBUG	?= -O2
 CC	?= gcc
-INCLUDE	?= -I.
+INCLUDE	?= -I. -I$(INCLUDE_DIR)
 DEFS	= -D_GNU_SOURCE
 CFLAGS	?= $(DEBUG) $(DEFS) -Wformat=2 -Wall -Wextra -Winline $(INCLUDE) -pipe -fPIC $(EXTRA_CFLAGS)
 #CFLAGS	= $(DEBUG) $(DEFS) -Wformat=2 -Wall -Wextra -Wconversion -Winline $(INCLUDE) -pipe -fPIC
