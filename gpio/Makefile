@@ -31,12 +31,12 @@ Q ?= @
 endif
 
 #DEBUG	= -g -O0
-DEBUG	= -O2
+DEBUG	?= -O2
 CC	?= gcc
-INCLUDE	= -I$(DESTDIR)$(PREFIX)/include
+INCLUDE    ?= -I../wiringPi
 CFLAGS	= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
 
-LDFLAGS	= -L$(DESTDIR)$(PREFIX)/lib
+LDFLAGS    ?= -L../wiringPi
 LIBS    = -lwiringPi -lwiringPiDev -lpthread -lrt -lm -lcrypt
 
 # May not need to  alter anything below this line
