@@ -34,7 +34,7 @@ endif
 DEBUG	?= -O2
 CC	?= gcc
 INCLUDE    ?= -I../wiringPi -I../devLib
-CFLAGS	?= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
+CFLAGS	?= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
 
 LDFLAGS    ?= -L../wiringPi
 LIBS    = -lwiringPi -lpthread -lrt -lm -lcrypt
