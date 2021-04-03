@@ -53,7 +53,7 @@ version.h:	../VERSION
 
 gpio:	$(OBJ)
 	$Q echo [Link]
-	$Q $(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBS)
+	$Q $(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBS) -L../wiringPi
 
 .c.o:
 	$Q echo [Compile] $<
