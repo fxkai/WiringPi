@@ -33,8 +33,8 @@ endif
 #DEBUG	= -g -O0
 DEBUG	?= -O2
 CC	?= gcc
-INCLUDE    ?= -I../wiringPi -I../devLib
-CFLAGS	?= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
+INCLUDE ?= -I../wiringPi -I../devLib
+CFLAGS ?= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
 
 LDFLAGS    ?= -L../wiringPi
 LIBS    = -lwiringPi -lpthread -lrt -lm -lcrypt
