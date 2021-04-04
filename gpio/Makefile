@@ -36,7 +36,7 @@ CC	?= gcc
 INCLUDE ?= -I../wiringPi -I../devLib
 CFLAGS ?= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
 
-LDFLAGS    ?= -L../wiringPi
+LDFLAGS    ?= -L../wiringPi -L../wiringPiDev
 LIBS    = -lwiringPi -lpthread -lrt -lm -lcrypt -lwiringPiDev
 
 # May not need to  alter anything below this line
@@ -53,7 +53,7 @@ version.h:	../VERSION
 
 gpio:	$(OBJ)
 	$Q echo [Link]
-	$Q $(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBS) -L../wiringPi
+	$Q $(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBS) -L../wiringPi  -L../wiringPiDev
 
 .c.o:
 	$Q echo [Compile] $<
