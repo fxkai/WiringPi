@@ -62,7 +62,8 @@ gpio:	$(OBJ)
 .PHONY:	clean
 clean:
 	$Q echo "[Clean]"
-	$Q rm -f $(OBJ) gpio *~ core tags *.bak
+	@rm -f $(DESTDIR)$(PREFIX)/bin/gpio
+	@rm -f $(DESTDIR)$(PREFIX)/share/man/man1/gpio.1	
 
 .PHONY:	tags
 tags:	$(SRC)
@@ -72,13 +73,15 @@ tags:	$(SRC)
 .PHONY:	install
 install: gpio
 	$Q echo "[Install]"
-	$Q cp gpio		$(DESTDIR)$(PREFIX)/bin
+	@install -d $(DESTDIR)$(PREFIX)/bin
+	@install -m 4755 -o root -g root gpio $(DESTDIR)$(PREFIX)/bin
+	@install -d $(DESTDIR)$(PREFIX)/share/man/man1
+	@install -m 644 -o root -g root gpio.1 $(DESTDIR)$(PREFIX)/share/man/man1
+
 ifneq ($(WIRINGPI_SUID),0)
 	$Q chown root.root	$(DESTDIR)$(PREFIX)/bin/gpio
 	$Q chmod 4755		$(DESTDIR)$(PREFIX)/bin/gpio
 endif
-	$Q mkdir -p		$(DESTDIR)$(PREFIX)/share/man/man1
-	$Q cp gpio.1		$(DESTDIR)$(PREFIX)/share/man/man1
 
 .PHONY: check-deb-destdir
 check-deb-destdir:
