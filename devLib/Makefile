@@ -24,15 +24,15 @@
 VERSION=$(shell cat ../VERSION)
 DESTDIR?=/usr
 PREFIX?=/local
+BASE_NAME=libwiringPiDev
+STATIC=$(BASE_NAME).a
+DYNAMIC=$(BASE_NAME).so.$(VERSION)
 
 LDCONFIG?=ldconfig
 
 ifneq ($V,1)
 Q ?= @
 endif
-
-STATIC=libwiringPiDev.a
-DYNAMIC=libwiringPiDev.so.$(VERSION)
 
 #DEBUG	= -g -O0
 DEBUG	?= -O2
@@ -68,7 +68,9 @@ $(STATIC):	$(OBJ)
 
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
-	$Q $(CC) -shared -Wl,-soname,libwiringPiDev.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPiDev.so.$(VERSION) -lpthread $(OBJ)
+	# $Q $(CC) -shared -Wl,-soname,libwiringPiDev.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPiDev.so.$(VERSION) -lpthread $(OBJ)
+	$Q $(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread $(OBJ)
+	$Q ln -sf $(BASE_NAME).so $(BASE_NAME).so.$(VERSION)	
 
 .c.o:
 	$Q echo [Compile] $<
@@ -94,6 +96,7 @@ install:	$(DYNAMIC)
 	$Q install -m 0755 -d						$(DESTDIR)$(PREFIX)/lib
 	$Q install -m 0755 libwiringPiDev.so.$(VERSION)			$(DESTDIR)$(PREFIX)/lib/libwiringPiDev.so.$(VERSION)
 	$Q ln -sf $(DESTDIR)$(PREFIX)/lib/libwiringPiDev.so.$(VERSION)	$(DESTDIR)/lib/libwiringPiDev.so
+	$Q ln -sf $(DESTDIR)$(PREFIX)/lib/libwiringPiDev.so.$(VERSION)	$(DESTDIR)/lib/libwiringPiDev.so.$(DYN_VERS_MAJ)	
 	$Q $(LDCONFIG)
 
 .PHONY:	install-static
