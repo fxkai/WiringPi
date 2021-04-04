@@ -69,7 +69,7 @@ $(STATIC):	$(OBJ)
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
 	# $Q $(CC) -shared -Wl,-soname,libwiringPiDev.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPiDev.so.$(VERSION) -lpthread $(OBJ)
-	$Q $(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread $(OBJ)
+	$Q $(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread $(OBJ) $(LDFLAGS)
 	$Q ln -sf $(BASE_NAME).so $(BASE_NAME).so.$(VERSION)	
 
 .c.o:
