@@ -74,7 +74,7 @@ $(DYNAMIC):	$(OBJ)
 
 .c.o:
 	$Q echo [Compile] $<
-	$Q $(CC) -c $(CFLAGS) $< -o $@
+	$Q $(CC) -c $(CFLAGS) -fPIC $< -o $@
 
 .PHONY:	clean
 clean:
