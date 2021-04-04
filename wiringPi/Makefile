@@ -102,14 +102,22 @@ tags:	$(SRC)
 
 .PHONY:	install
 install:	$(DYNAMIC)
-	$Q echo "[Install Headers]"
-	$Q install -m 0755 -d						$(DESTDIR)$(PREFIX)/include
-	$Q install -m 0644 $(HEADERS)					$(DESTDIR)$(PREFIX)/include
-	$Q echo "[Install Dynamic Lib]"
-	$Q install -m 0755 -d						$(DESTDIR)$(PREFIX)/lib
-	$Q install -m 0755 libwiringPi.so.$(VERSION)			$(DESTDIR)$(PREFIX)/lib/libwiringPi.so.$(VERSION)
-	$Q ln -sf $(DESTDIR)$(PREFIX)/lib/libwiringPi.so.$(VERSION)	$(DESTDIR)/lib/libwiringPi.so
-	# $Q $(LDCONFIG)
+	@install -m 0755 -d			$(LIB_DIR)
+	@install -m 0755 -d			$(INCLUDE_DIR)
+	@install -m 0644 wiringPi.h		$(INCLUDE_DIR)
+	@install -m 0644 wiringSerial.h		$(INCLUDE_DIR)
+	@install -m 0644 wiringShift.h		$(INCLUDE_DIR)
+	@install -m 0644 gertboard.h		$(INCLUDE_DIR)
+	@install -m 0644 piNes.h		$(INCLUDE_DIR)
+	@install -m 0644 softPwm.h		$(INCLUDE_DIR)
+	@install -m 0644 softServo.h		$(INCLUDE_DIR)
+	@install -m 0644 softTone.h		$(INCLUDE_DIR)
+	@install -m 0644 lcd.h			$(INCLUDE_DIR)
+	@install -m 0644 wiringPiSPI.h		$(INCLUDE_DIR)
+	@install -m 0644 wiringPiI2C.h		$(INCLUDE_DIR)
+	@install -m 0755 $(BASE_NAME).so	$(LIB_DIR)/$(DYNAMIC)
+	@ln -sf $(DYNAMIC)			$(LIB_DIR)/$(BASE_NAME).so
+	@ln -sf $(DYNAMIC)			$(LIB_DIR)/$(BASE_NAME).so.$(DYN_VERS_MAJ)
 
 .PHONY: check-deb-destdir
 check-deb-destdir:
