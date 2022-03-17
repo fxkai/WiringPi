@@ -22,6 +22,7 @@
 #################################################################################
 
 VERSION=$(shell cat ../VERSION)
+DYN_VERS_MAJ=2
 DESTDIR?=/usr
 PREFIX?=/local
 BASE_NAME=libwiringPi
@@ -80,7 +81,8 @@ static:
 
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
-	$Q $(CC) -shared -Wl,-soname,libwiringPi.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
+	$Q $(CC) -shared -Wl,-soname,libwiringPi.so.$(DYN_VERS_MAJ) -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
+	$Q ln -sf libwiringPi.so.$(VERSION) libwiringPi.so.$(DYN_VERS_MAJ)
 	$Q ln -sf libwiringPi.so.$(VERSION) libwiringPi.so
 
 .c.o:
