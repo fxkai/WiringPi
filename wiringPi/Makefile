@@ -21,7 +21,8 @@
 #    along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
 #################################################################################
 
-VERSION=$(shell cat ../VERSION)
+VERSION=2.60
+DYN_VERS_MAJ=2
 DESTDIR?=/usr
 PREFIX?=/local
 BASE_NAME=libwiringPi
@@ -80,7 +81,7 @@ static:
 
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
-	$Q $(CC) -shared -Wl,-soname,libwiringPi.so$(WIRINGPI_SONAME_SUFFIX) -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
+	$Q $(CC) -shared -Wl,-soname,libwiringPi.so -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
 	$Q ln -sf libwiringPi.so.$(VERSION) libwiringPi.so
 
 .c.o:
@@ -123,6 +124,7 @@ install-deb:	$(DYNAMIC) check-deb-destdir
 	install -m 0755 -d							$(DEB_DESTDIR)/usr/lib
 	install -m 0755 libwiringPi.so.$(VERSION)				$(DEB_DESTDIR)/usr/lib/libwiringPi.so.$(VERSION)
 	ln -sf $(DEB_DESTDIR)/usr/lib/libwiringPi.so.$(VERSION)	$(DEB_DESTDIR)/usr/lib/libwiringPi.so
+	ln -sf $(DEB_DESTDIR)/usr/lib/libwiringPi.so.$(VERSION)	$(DEB_DESTDIR)/usr/lib/libwiringPi.so.$(DYN_VERS_MAJ)
 
 .PHONY:	uninstall
 uninstall:
