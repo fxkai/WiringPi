@@ -21,7 +21,8 @@
 #    along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
 #################################################################################
 
-VERSION=$(shell cat ../VERSION)
+VERSION=2.60
+DYN_VERS_MAJ=2
 DESTDIR?=/usr
 PREFIX?=/local
 BASE_NAME=libwiringPiDev
@@ -67,8 +68,9 @@ $(STATIC):	$(OBJ)
 
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
-	$Q $(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread $(OBJ) $(LDFLAGS)
-	$Q ln -sf $(BASE_NAME).so $(BASE_NAME).so.$(VERSION)	
+	$Q $(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(VERSION) -o $(BASE_NAME).so.$(VERSION) -lpthread $(OBJ) $(LDFLAGS)
+	$Q ln -sf $(BASE_NAME).so.$(VERSION) $(BASE_NAME).so
+	$Q ln -sf $(BASE_NAME).so.$(VERSION) $(BASE_NAME).so.$(DYN_VERS_MAJ)	
 
 .c.o:
 	$Q echo [Compile] $<
