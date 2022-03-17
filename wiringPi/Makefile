@@ -38,10 +38,6 @@ ifneq ($V,1)
 Q ?= @
 endif
 
-STATIC=libwiringPi.a
-DYNAMIC=libwiringPi.so.$(VERSION)
-
-#DEBUG	= -g -O0
 DEBUG	?= -O2
 CC	?= gcc
 INCLUDE	?= -I. -I$(INCLUDE_DIR) -I=/usr/include
