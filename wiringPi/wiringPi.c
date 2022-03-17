@@ -9,7 +9,7 @@
  *	the clock section /grr/mutter/
  ***********************************************************************
  * This file is part of wiringPi:
- *	https://projects.drogon.net/raspberry-pi/wiringpi/
+ *    https://github.com/WiringPi/WiringPi
  *
  *    wiringPi is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU Lesser General Public License as
@@ -239,7 +239,7 @@ const char *piModelNames [21] =
   "Unknown15",	// 15
   "CM3+",	// 16
   "Pi 4B",	// 17
-  "Unknown18",	// 18
+  "Pi Zero2-W",	// 18
   "Pi 400",	// 19
   "CM4",	// 20
 } ;
@@ -785,7 +785,7 @@ int piGpioLayout (void)
     fprintf (stderr, "Unable to determine hardware version. I see: %s,\n", line) ;
     fprintf (stderr, " - expecting BCM2708, BCM2709 or BCM2835.\n") ;
     fprintf (stderr, "If this is a genuine Raspberry Pi then please report this\n") ;
-    fprintf (stderr, "to projects@drogon.net. If this is not a Raspberry Pi then you\n") ;
+    fprintf (stderr, "at GitHub.com/wiringPi/wiringPi. If this is not a Raspberry Pi then you\n") ;
     fprintf (stderr, "are on your own as wiringPi is designed to support the\n") ;
     fprintf (stderr, "Raspberry Pi ONLY.\n") ;
     exit (EXIT_FAILURE) ;
@@ -1324,8 +1324,8 @@ struct wiringPiNodeStruct *wiringPiFindNode (int pin)
 
 static         void pinModeDummy             (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int mode)  { return ; }
 static         void pullUpDnControlDummy     (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int pud)   { return ; }
-static unsigned int digitalRead8Dummy        (UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return 0 ; }
-static         void digitalWrite8Dummy       (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
+//static unsigned int digitalRead8Dummy        (UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return 0 ; }
+//static         void digitalWrite8Dummy       (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static          int digitalReadDummy         (UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return LOW ; }
 static         void digitalWriteDummy        (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static         void pwmWriteDummy            (UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
@@ -2256,10 +2256,6 @@ int wiringPiSetup (void)
   int   fd ;
   int   model, rev, mem, maker, overVolted ;
 
-// It's actually a fatal error to call any of the wiringPiSetup routines more than once,
-//	(you run out of file handles!) but I'm fed-up with the useless twats who email
-//	me bleating that there is a bug in my code, so screw-em.
-
   if (wiringPiSetuped)
     return 0 ;
 
@@ -2284,8 +2280,7 @@ int wiringPiSetup (void)
 
   if ((model == PI_MODEL_CM) ||
       (model == PI_MODEL_CM3) ||
-      (model == PI_MODEL_CM3P) ||
-      (model == PI_MODEL_CM4))
+      (model == PI_MODEL_CM3P))
     wiringPiMode = WPI_MODE_GPIO ;
   else
     wiringPiMode = WPI_MODE_PINS ;
@@ -2295,7 +2290,7 @@ int wiringPiSetup (void)
      pinToGpio =  pinToGpioR1 ;
     physToGpio = physToGpioR1 ;
   }
-  else 					// A2, B2, A+, B+, CM, Pi2, Pi3, Zero
+  else 					// A2, B2, A+, B+, CM, Pi2, Pi3, Zero, Zero W, Zero 2 W
   {
      pinToGpio =  pinToGpioR2 ;
     physToGpio = physToGpioR2 ;
