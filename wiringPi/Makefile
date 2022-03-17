@@ -81,7 +81,7 @@ static:
 
 $(DYNAMIC):	$(OBJ)
 	$Q echo "[Link (Dynamic)]"
-	$Q $(CC) -shared -Wl,-soname,libwiringPi.so -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
+	$Q $(CC) -shared -Wl,-soname,libwiringPi.so.$(VERSION) -o libwiringPi.so.$(VERSION) $(LIBS) $(OBJ) $(LDFLAGS)
 	$Q ln -sf libwiringPi.so.$(VERSION) libwiringPi.so
 
 .c.o:
